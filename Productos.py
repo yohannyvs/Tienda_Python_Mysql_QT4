@@ -28,6 +28,6 @@ class products(base1, form1):
             print(db.lastError().databaseText())
         else:
             query = QSqlQuery()
-            #query.exec_("CALL TiendaVrt.InsertarProducto("+ self.txt_cod.text()+ ",'"+ self.txt_prod.text() +"', "+ self.txt_precio.text()+", "+self.txt_cant.text()+", "+ self.txt_cod_cat.text()+");")
+            query.exec_("CALL TiendaVrt.InsertarProducto("+ self.txt_cod.text()+ ",'"+ self.txt_prod.text() +"', "+ self.txt_precio.text()+", "+self.txt_cant.text()+", "+ self.txt_cod_cat.text()+");")
             print("Database is OK  ")
             db.close()
