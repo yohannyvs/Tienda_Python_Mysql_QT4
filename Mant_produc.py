@@ -30,6 +30,7 @@ class Reg(base1, form1):
             print(db.lastError().databaseText())
         else:
             query = QSqlQuery()
+            #llama el procedimiento LMcenado
             query.exec_("CALL InsertarCliente("+ self.txt_id.text() +",'"+ self.txt_nombre.text() +"','"+ self.txt_apellido.text()+"','"+ self.txt_direccion.text() +"'," + self.txt_telefono.text()+",'"+ self.txt_pass.text()+"');")
             print("Database is OK  ")
             db.close()
