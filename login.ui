@@ -70,7 +70,7 @@
      <string>Contraseña</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="txt_id">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -80,7 +80,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="txt_pass">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -88,6 +88,9 @@
       <width>141</width>
       <height>24</height>
      </rect>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
     </property>
    </widget>
   </widget>

@@ -5,7 +5,8 @@ import PyQt4
 import sys  # provee la interacción con el intérprete de Python
 from PyQt4 import uic  # carga archivos .ui
 from PyQt4.QtGui import QMessageBox
-from PyQt4.QtSql import QSqlDatabase, QSqlQuery, QSqlRecord
+from PyQt4.QtSql import QSqlDatabase, QSqlQuery
+from PyQt4.QtGui import QIntValidator
 import Registro #importa el documento .py
 import Productos
 
@@ -17,12 +18,6 @@ class login(base, form):
         super(login, self).__init__(parent)
         self.setupUi(self)
 
-        self.r = Registro.Reg() #llama la clase que sera en el documento .py
-        self.p = Productos.products()
-        self.btn_registro.clicked.connect(self.r.show) #muesta la clase en un boton
-        self.btn_Ingresar.clicked.connect(self.p.show)
-
-    def con(self): # conexion a la base y ejecuta un query
         db = QSqlDatabase.addDatabase('QMYSQL')
         db.setHostName("localhost")
         db.setDatabaseName("TiendaVrt")
@@ -34,10 +29,25 @@ class login(base, form):
             print(db.lastError().driverText())
             print(db.lastError().databaseText())
         else:
-            query = QSqlQuery()
-            query.exec_("select count(*) from Cliente where IdCliente = 304810952 and Contraseña = 'progra00';")
             print("Database is OK")
-            db.close()
+
+        self.txt_id.setValidator(QIntValidator())
+        self.r = Registro.Reg() #llama la clase que sera en el documento .py
+        self.p = Productos.products()
+        self.btn_registro.clicked.connect(self.r.show) #muesta la clase en un boton
+        self.btn_Ingresar.clicked.connect(self.login)
+
+    def login(self): # conexion a la base y ejecuta un query
+
+            query = QSqlQuery()
+            query.exec_("select count(*) from Cliente where IdCliente = "+ self.txt_id.text() +" and Contraseña = '"+ self.txt_pass.text() +"';")
+            while query.next():
+                count = str(query.value(0))
+            if count == "1":
+                self.p.show()
+                self.hide()
+            else:
+                print("Error")
 
 
 application = PyQt4.QtGui.QApplication(sys.argv)
