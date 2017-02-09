@@ -37,6 +37,8 @@ class login(base, form):
         self.btn_registro.clicked.connect(self.r.show) #muesta la clase en un boton
         self.btn_Ingresar.clicked.connect(self.login)
 
+        db.close()
+
     def login(self): # conexion a la base y ejecuta un query
 
             query = QSqlQuery()
@@ -48,6 +50,9 @@ class login(base, form):
                 self.hide()
             else:
                 print("Error")
+                QMessageBox.information(self,"Error:", "Datos incorrectos")
+                self.txt_id.clear()
+                self.txt_pass.clear()
 
 
 application = PyQt4.QtGui.QApplication(sys.argv)

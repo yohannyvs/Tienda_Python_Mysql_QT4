@@ -14,10 +14,6 @@ class Reg(base1, form1):
         super(Reg, self).__init__(parent)
         self.setupUi(self)
 
-        self.btnSalir.clicked.connect(self.close)
-        self.btnAceptar.clicked.connect(self.reg_usuario)
-
-    def reg_usuario(self):
         db = QSqlDatabase.addDatabase('QMYSQL')
         db.setHostName("localhost")
         db.setDatabaseName("TiendaVrt")
@@ -29,7 +25,13 @@ class Reg(base1, form1):
             print(db.lastError().driverText())
             print(db.lastError().databaseText())
         else:
-            query = QSqlQuery()
-            query.exec_("CALL InsertarCliente("+ self.txt_id.text() +",'"+ self.txt_nombre.text() +"','"+ self.txt_apellido.text()+"','"+ self.txt_direccion.text() +"'," + self.txt_telefono.text()+",'"+ self.txt_pass.text()+"');")
             print("Database is OK  ")
-            db.close()
+
+        self.btnSalir.clicked.connect(self.close)
+        self.btnAceptar.clicked.connect(self.reg_usuario)
+
+    def reg_usuario(self):
+        query = QSqlQuery()
+        query.exec_("CALL InsertarCliente("+ self.txt_id.text() +",'"+ self.txt_nombre.text() +"','"+ self.txt_apellido.text()+"','"+ self.txt_direccion.text() +"'," + self.txt_telefono.text()+",'"+ self.txt_pass.text()+"');")
+        QMessageBox.information(self,"", "Datos Ingresados con Exito")
+        self.hide()
